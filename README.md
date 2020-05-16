@@ -31,5 +31,37 @@ Implementation of this model was directly taken from Transformers Library by hug
 
 `inference.py`: code to load saved model and make inference
 
-`arguments.py`: 
+`arguments.py`:
+    this script initialize all the required arguments needs to make train, valid Dataset, for training QG model and for infernce.There is a class for each of these
+
+    `class trainDataArgs/ validDataArgs:` a class to create training/valid Dataset
+        bert_model= type of BERT model, for example 'bert-base-uncased'
+
+        max_seq_len = max sequence length for trainig/validation
+
+        squad_path= file path to training/validation Data in format of SQUAD.
+
+        inferenceMode= True if we want to give input data other than SQUAD else False
+
+        inferenceFile= if inferenceMode = True: a path to json file consisting of list of dict 
+          [{'paragraph':' a string', 'context_list': ['list' , 'of', 'context', 'i.e answers'] }, {}, . . .]  context_list could be a optional in this json file
+
+        occu = 30000 to restrict number of datapoints in this dataset 
+
+    `class inferenceArgs:`
+        all other argument are same as above class.
+        infereceModelPath= path to saved pytorch Model
+
+
+    `class trainingConfig:`
+        bert_model = bert_model
+        bert_config = config for BERT model , a optional argument. BertConfig.from_pretrained(bert_model)
+        max_seq_len= max_seq_len
+        train_batch_size= 16
+        valid_batch_size= 16
+        ignore_label =0 label to ignore, in genral padded token
+        num_workers=0
+        epochs =3 number of epochs
+        learningRate = 5e-5
+        save_dir = directory to save pytorch model. Whole model is saved not only weight
 
