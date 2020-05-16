@@ -65,3 +65,8 @@ Implementation of this model was directly taken from Transformers Library by hug
         learningRate = 5e-5
         save_dir = directory to save pytorch model. Whole model is saved not only weight
 
+#### How to train: 
+Install all required Packages above. to train do suitable changes in `trainDataArgs`, `validDataArgs`, and in `trainingConfig` class. Then run `train.py`
+#### Create Inference
+Do suitable changes in `inferenceArgs` and run `inference.py`. Specify trained model file path, inference Data file path correctly.
+
