@@ -29,7 +29,7 @@ class inferenceArgs:
     inferenceFile= None  # CR
     # if nferenceMode = True: a path to json file consisting of list of dict with keys 'paragraph' as mandatory key and 'context_list' as option  [{'paragraph':' a string', 'context_list': ['list' , 'of', 'context', 'i.e answers'] }, {}, . . .]
     occu= None
-    infereceModelPath= '/kaggle/input/qg-bert-en-dec/model_2'
+    infereceModelPath= 'model_9'
 
 
 class trainingConfig:
