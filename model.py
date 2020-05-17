@@ -1,11 +1,8 @@
 import logging
 import os
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
-
 from transformers.modeling_bert import BertLayerNorm, BertPreTrainedModel, BertModel
 from transformers.activations import get_activation
 

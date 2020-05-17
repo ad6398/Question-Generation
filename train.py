@@ -36,6 +36,7 @@ class AverageMeter(object):
         self.count += n
         self.avg = self.sum / self.count
 
+
 def get_blue_score(orig, pre):
 #     print("orignal blue ->>>>:" , orig,"\n Predicted blue->>>>", pre)
     orig_tok= orig.split()
@@ -46,10 +47,8 @@ def get_blue_score(orig, pre):
     return score
 
 
-
 def predict(evalData, batch_size, device, model,  ignore_label=-1, worker=0):
     model.eval()
-    
     tokenizer = evalData.tokenizer
     vocab_size = tokenizer.vocab_size
     evalDataLoader = DataLoader(evalData,batch_size=batch_size, num_workers= worker)
@@ -58,7 +57,6 @@ def predict(evalData, batch_size, device, model,  ignore_label=-1, worker=0):
     total_acc= AverageMeter()
     predictions= []
     for idx,batch in enumerate(tdl):
-    
         ids = batch['ids'].to(device, dtype=torch.long)
         mask_ids = batch['mask_ids'].to(device, dtype=torch.long)
         seg_ids = batch['segment_ids'].to(device, dtype=torch.long)
@@ -102,7 +100,6 @@ def predict(evalData, batch_size, device, model,  ignore_label=-1, worker=0):
 
 
 def train(trainData, validData, device, train_config):
-    
     seed_val = 42
     random.seed(seed_val)
     np.random.seed(seed_val)
@@ -151,7 +148,6 @@ def train(trainData, validData, device, train_config):
         num_warmup_steps=0,
         num_training_steps=num_steps
     )
-
     
     model.to(device)
     
@@ -162,12 +158,9 @@ def train(trainData, validData, device, train_config):
         t0 = time.time()
         total_loss = AverageMeter()
         total_acc = AverageMeter()
-
-        tdl = tqdm(trainDataloader, total=len(trainDataloader))
-
         model.train()
 
-        
+        tdl = tqdm(trainDataloader, total=len(trainDataloader))
         for idx,batch in enumerate(tdl):
 
             ids= batch['ids'].to(device, dtype= torch.long)
@@ -186,12 +179,10 @@ def train(trainData, validData, device, train_config):
                 masked_lm_labels = ques
             )[:2]
 
-
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
             scheduler.step()
-
 
             logits= logits.view(-1, vocab_size)
             # orig_ques= ques.view(-1)
@@ -206,12 +197,8 @@ def train(trainData, validData, device, train_config):
                 cur_acc= get_blue_score(cur_orignal_ques, cur_pred_ques)
                 total_acc.update(cur_acc)
 
-            tdl.set_postfix(accu= total_acc.avg)
-
             total_loss.update(loss.item(), mask_ids.size(0))
-            
-            
-
+            tdl.set_postfix(accu= total_acc.avg)
             tdl.set_postfix(loss= total_loss.avg, accu= total_acc.avg)
 
         if validData:
@@ -220,21 +207,12 @@ def train(trainData, validData, device, train_config):
         torch.save(model, train_config.save_dir+"model_{}".format(epoch_i)) #save whole model after epoch
 
 
-
-
-
-
 if __name__ == "__main__":
     if torch.cuda.is_available():    
-
     # Tell PyTorch to use the GPU.    
         device = torch.device("cuda")
-
         print('There are %d GPU(s) available.' % torch.cuda.device_count())
-
         print('We will use the GPU:', torch.cuda.get_device_name(0))
-
-    # If not...
     else:
         print('No GPU available, using the CPU instead.')
         device = torch.device("cpu")

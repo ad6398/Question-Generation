@@ -10,8 +10,8 @@ class trainDataArgs:
     squad_path= 'train-v1.1.json' #CR
     inferenceMode= False  # T/F for inference
     inferenceFile= None  # if nferenceMode = True: a path to json file consisting of list of dict with keys 'paragraph' as mandatory key and 'context_list' as option  [{'paragraph':' a string', 'context_list': ['list' , 'of', 'context', 'i.e answers'] }, {}, . . .]
-
     occu = None
+
 
 class validDataArgs:
     bert_model= bert_model
@@ -20,6 +20,7 @@ class validDataArgs:
     inferenceMode= False  # T/F for inference
     inferenceFile= None  # if nferenceMode = True: a path to json file consisting of list of dict with keys 'paragraph' as mandatory key and 'context_list' as option  [{'paragraph':' a string', 'context_list': ['list' , 'of', 'context', 'i.e answers'] }, {}, . . .]
     occu= 10000
+
 
 class inferenceArgs:
     bert_model= bert_model

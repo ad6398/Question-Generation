@@ -53,7 +53,6 @@ def process_input(text, ans, ques, tokenizer, max_seq_len):
 def pad_ques(ques, max_seq_len, padding =0):
     if len(ques)> max_seq_len:
         raise IndexError("len of ques {} greater than max_seq_len{}".format(len(ques), max_seq_len))
-
     req_len= max_seq_len- len(ques)
     ques += [padding]* req_len
 
@@ -63,7 +62,6 @@ def pad_ques(ques, max_seq_len, padding =0):
 
 def convert_to_input(text, ans, ques, tokenizer, max_seq_len):
     text_token, ans_token, ques_token= process_input(text,ans,ques, tokenizer, max_seq_len)
-
     allToken= ["[CLS]"] + text_token  + ["[SEP]"] + ans_token + ["[SEP]"]
     ques_token= ["[CLS]"] + ques_token  + ["[SEP]"]
     ids= get_token_ids(allToken, tokenizer, max_seq_len)
@@ -120,7 +118,6 @@ class QGDataset(Dataset):
                         }
                         self.examples.append(ex)
             del json_data
-        
         else:
             if args.inferenceFile == None:
                 raise ValueError("wrong file for inference")
@@ -133,13 +130,11 @@ class QGDataset(Dataset):
                 contextList= None
                 if 'paragraph' in item.keys():
                     paragraph = item['paragraph']
-                
                 else:
                     raise KeyError("no text para graph is found. worong format of inference file")
                 
                 if 'context_list' in  item.keys():
                     contextList= item['context_list']
-                
                 else:
                     contextList = generate_context_list(paragraph)
                 
@@ -149,10 +144,7 @@ class QGDataset(Dataset):
                         'ans': context,
                         'ques': "a dummy ques to avoid None error"
                     }
-
                     self.examples.append(cur_ex)
-                
-
         if args.occu:
             self.examples= self.examples[:args.occu]
 
@@ -163,7 +155,6 @@ class QGDataset(Dataset):
     def __getitem__(self,idx):
         cur_ex= self.examples[idx]
         ids, mask_id, seg_id, ques= convert_to_input(cur_ex['text'], cur_ex['ans'], cur_ex['ques'], self.tokenizer, self.max_seq_len)
-
         exm= {
             'ids': torch.tensor(ids, dtype= torch.long),
             'mask_ids': torch.tensor(mask_id, dtype= torch.long),
@@ -173,12 +164,3 @@ class QGDataset(Dataset):
 #         print(exm)
         return exm
     
-
-
-
-        
-
-        
-
-
-
