@@ -1,5 +1,6 @@
 # Question-Generation
 Question Generation using transformers
+
 Given a paragraph/text. Generate all the possible question related to this paragraph. Context(basically answer) may or may not be provided to generate question. If context is provided then genrate that question from that paragraph whose answer would be that context. 
 
 
@@ -66,7 +67,7 @@ Implementation of this model was directly taken from Transformers Library by hug
         save_dir = directory to save pytorch model. Whole model is saved not only weight
 
 #### How to train: 
-Install all required Packages above. to train put squad train.json and dev.json in same folder as this code or do suitable changes `trainDataArgs`, `validDataArgs`, and in `trainingConfig` class. Then run `train.py` 
+Install all required Packages above. to train download Squad Data from this link (https://www.kaggle.com/stanfordu/stanford-question-answering-dataset ) and put train-v1.1.json.json and dev-v1.1.json in same directory as this code or do suitable changes in `trainDataArgs`, `validDataArgs` to specify file path to these data. Then run `train.py` 
 #### Create Inference
 Do suitable changes in `inferenceArgs` and run `inference.py`. Specify trained model file path, inference Data file path correctly.
 
