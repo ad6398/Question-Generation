@@ -1,7 +1,7 @@
 # Question-Generation
 Question Generation using transformers
 
-Given a paragraph/text. Generate all the possible question related to this paragraph. Context(basically answer) may or may not be provided to generate question. If context is provided then genrate that question from that paragraph whose answer would be that context. 
+Given a paragraph, generate all the possible questions related to this paragraph. If a context is provided, create those questions from that paragraph whose answer should be that context.
 
 
 ## Dataset and Metrices
